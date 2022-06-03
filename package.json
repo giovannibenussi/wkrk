@@ -1,0 +1,35 @@
+{
+  "name": "wkrk",
+  "version": "0.0.0",
+  "description": "A lightweight framework for CloudFlare Workers",
+  "author": "Giovanni Benussi",
+  "license": "MIT",
+  "private": false,
+  "type": "module",
+  "source": "src/index.ts",
+  "exports": {
+    "require": "./dist/wkrk.cjs",
+    "default": "./dist/wkrk.modern.js"
+  },
+  "main": "./dist/wkrk.cjs",
+  "module": "./dist/wkrk.module.js",
+  "unpkg": "./dist/wkrk.umd.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "microbundle",
+    "dev": "microbundle watch",
+    "test": "jest"
+  },
+  "devDependencies": {
+    "@types/jest": "^27.5.1",
+    "jest": "^28.1.0",
+    "jest-environment-miniflare": "^2.4.0",
+    "microbundle": "^0.15.0",
+    "ts-jest": "^28.0.2",
+    "ts-node": "^10.7.0",
+    "typescript": "^4.6.4"
+  },
+  "dependencies": {
+    "wkrk-extended": "^0.0.6"
+  }
+}

@@ -1,0 +1,2 @@
+import{ExtendedRequest as e,ExtendedResponse as t}from"wkrk-extended";const o=o=>({async fetch(n){new e(n);const r=new t,u=new URL(n.url).pathname,d=o[u];if(!d)return r.error(`Don't know how to handle the ${u} path. Check your routes configuration.`);const h=((e,t)=>{const o=e.method.toLowerCase();var n;return["get","post","put","delete"].includes(o)&&(t[o]||(null==(n=t.default)?void 0:n[o]))||t.handler})(n,d);return h?h(n,r):r.error(`Unknown request method: ${n.method}`)}});export{o as wkrk};
+//# sourceMappingURL=wkrk.modern.js.map
