@@ -21,6 +21,7 @@
     "test": "jest"
   },
   "devDependencies": {
+    "@cloudflare/workers-types": "^3.12.0",
     "@types/jest": "^27.5.1",
     "jest": "^28.1.0",
     "jest-environment-miniflare": "^2.4.0",

@@ -1,12 +1,12 @@
 import { ExtendedResponse } from "wkrk-extended";
 import { extendedRequest, ExtendedRequestType } from "wkrk-extended";
 
-export type WKRKParams = {
+export type WKRKParams<Env = unknown> = {
   req: ExtendedRequestType;
   res: ExtendedResponse;
   request: Request;
-  env: object;
-  context: any;
+  env: Env;
+  context: ExecutionContext;
 };
 
 type Handler =
