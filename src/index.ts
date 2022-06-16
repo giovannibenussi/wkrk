@@ -16,7 +16,7 @@ type Handler =
 
 type MethodType = "get" | "post" | "put" | "delete";
 
-type Path = {
+export type WKRKPath = {
   get?: Handler;
   post?: Handler;
   put?: Handler;
@@ -32,10 +32,10 @@ type Path = {
 };
 
 type RouteType = {
-  [key: string]: Path;
+  [key: string]: WKRKPath;
 };
 
-const getHandler = (req: Request, pathHandler: Path) => {
+const getHandler = (req: Request, pathHandler: WKRKPath) => {
   const method = req.method.toLowerCase();
   if (["get", "post", "put", "delete"].includes(method)) {
     return (
