@@ -1,7 +1,7 @@
 import { ExtendedResponse } from "wkrk-extended";
 import { extendedRequest, ExtendedRequestType } from "wkrk-extended";
 
-type HandlerParams = {
+export type WKRKParams = {
   req: ExtendedRequestType;
   res: ExtendedResponse;
   request: Request;
@@ -11,8 +11,8 @@ type HandlerParams = {
 
 type Handler =
   | undefined
-  | ((params: HandlerParams) => Response)
-  | ((params: HandlerParams) => Promise<Response>);
+  | ((params: WKRKParams) => Response)
+  | ((params: WKRKParams) => Promise<Response>);
 
 type MethodType = "get" | "post" | "put" | "delete";
 
