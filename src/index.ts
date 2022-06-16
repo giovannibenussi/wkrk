@@ -1,10 +1,18 @@
 import { ExtendedResponse } from "wkrk-extended";
-import { ExtendedRequest } from "wkrk-extended";
+import { extendedRequest, ExtendedRequestType } from "wkrk-extended";
+
+type HandlerParams = {
+  req: ExtendedRequestType;
+  res: ExtendedResponse;
+  request: Request;
+  env: object;
+  context: any;
+};
 
 type Handler =
   | undefined
-  | ((req: Request, res: ExtendedResponse) => Response)
-  | ((req: Request, res: ExtendedResponse) => Promise<Response>);
+  | ((params: HandlerParams) => Response)
+  | ((params: HandlerParams) => Promise<Response>);
 
 type MethodType = "get" | "post" | "put" | "delete";
 
@@ -44,21 +52,21 @@ const pathIsInRoutes = (routes: RouteType, path: string) =>
   Object.keys(routes).includes(path);
 
 export const wkrk = (routes: RouteType) => ({
-  async fetch(req: Request) {
-    const requestProxy = new ExtendedRequest(req);
-    const responseProxy = new ExtendedResponse();
-    const pathname = new URL(req.url).pathname;
+  async fetch(originalRequest: Request, env: object, context: any) {
+    const req = extendedRequest(originalRequest);
+    const res = new ExtendedResponse({ request: originalRequest });
+    const pathname = new URL(originalRequest.url).pathname;
     const pathHandler = routes[pathname];
     if (!pathHandler) {
       const errorMessage = `Don't know how to handle the ${pathname} path. Check your routes configuration.`;
-      return responseProxy.error(errorMessage);
+      return res.error(errorMessage);
     }
-    const handler = getHandler(req, pathHandler);
+    const handler = getHandler(originalRequest, pathHandler);
     if (!handler) {
-      const errorMessage = `Unknown request method: ${req.method}`;
-      return responseProxy.error(errorMessage);
+      const errorMessage = `Unknown request method: ${originalRequest.method}`;
+      return res.error(errorMessage);
     }
 
-    return handler(req, responseProxy);
+    return handler({ req, res, request: originalRequest, env, context });
   },
 });
