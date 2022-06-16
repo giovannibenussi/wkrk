@@ -9,33 +9,33 @@ export type WKRKParams<Env = unknown> = {
   context: ExecutionContext;
 };
 
-type Handler =
+type WKRKHandler =
   | undefined
   | ((params: WKRKParams) => Response)
   | ((params: WKRKParams) => Promise<Response>);
 
 type MethodType = "get" | "post" | "put" | "delete";
 
-export type WKRKPath = {
-  get?: Handler;
-  post?: Handler;
-  put?: Handler;
-  delete?: Handler;
-  handler?: Handler;
+export type WKRKRoute = {
+  get?: WKRKHandler;
+  post?: WKRKHandler;
+  put?: WKRKHandler;
+  delete?: WKRKHandler;
+  handler?: WKRKHandler;
   default?: {
-    get?: Handler;
-    post?: Handler;
-    handler?: Handler;
-    put?: Handler;
-    delete?: Handler;
+    get?: WKRKHandler;
+    post?: WKRKHandler;
+    handler?: WKRKHandler;
+    put?: WKRKHandler;
+    delete?: WKRKHandler;
   };
 };
 
 type RouteType = {
-  [key: string]: WKRKPath;
+  [key: string]: WKRKRoute;
 };
 
-const getHandler = (req: Request, pathHandler: WKRKPath) => {
+const getHandler = (req: Request, pathHandler: WKRKRoute) => {
   const method = req.method.toLowerCase();
   if (["get", "post", "put", "delete"].includes(method)) {
     return (
